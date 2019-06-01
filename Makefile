@@ -25,6 +25,20 @@ build/cmove.o: src/cmove.c
 build/figures.o: src/figures.c
 	$(COMPILER) $(FLAGS) -MMD -c -o $@ $<
 
+	-include test/*.d
+
+bin/main-test: test/main.o test/figures.o test/test.o
+	$(COMPILER) $(FLAGS) -o $@ $^
+
+test/main.o: test/main.c
+	$(COMPILER) -I thirdparty -I src $(FLAGS) -MMD -c -o $@ $<
+
+test/test.o: test/test.c
+	$(COMPILER) -I thirdparty -I src $(FLAGS) -MMD -c -o $@ $<
+
+test/figures.o: src/figures.c
+	$(COMPILER) -I thirdparty -I src $(FLAGS) -MMD -c -o $@ $<
+
 
 
 clean:
